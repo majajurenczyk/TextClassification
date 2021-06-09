@@ -26,7 +26,7 @@ def read_label3_to_list():  # READS ALL LABEL 3 TO LIST
 
 
 def read_label4_to_list():  # READS ALL LABEL 4 TO LIST
-    with open("scaledata/Dennis+Schwartz/label.4class.Dennis+Schwartzz") as lab4:
+    with open("scaledata/Dennis+Schwartz/label.4class.Dennis+Schwartz") as lab4:
         reviews_list = [line.rstrip('\n') for line in lab4]
     with open("scaledata/James+Berardinelli/label.4class.James+Berardinelli") as lab4:
         reviews_list += [line.rstrip('\n') for line in lab4]
@@ -150,6 +150,13 @@ def get_features_occurings_dict(features):  # GET DICTIONARY WITH FEATURE AND HO
         result[names[counter]] = sum_of_collumns[counter]
         counter = counter + 1
     return sorted(result.items(), key=lambda x: x[1], reverse=True)
+
+
+def get_data_dict():
+    return {'label3': read_label3_to_list(),
+                    'label4': read_label4_to_list(),
+                    'rating': read_ratings_to_list(),
+                    'review': read_reviews_to_list()}
 
 
 if __name__ == '__main__':

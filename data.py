@@ -1,4 +1,6 @@
 from sklearn.feature_extraction.text import CountVectorizer
+import matplotlib.pyplot as plt
+import numpy as np
 
 
 def read_reviews_to_list():  # READS ALL REVIEWS TO LIST
@@ -88,7 +90,7 @@ def count_features_prob_for_label(labels, list_of_reviews):
     for label in features_occurings_for_label:
         result[label] = {}
         for feature in features_occurings_for_label[label]:
-            result[label][feature] = features_occurings_for_label[label][feature]\
+            result[label][feature] = features_occurings_for_label[label][feature] \
                                      / sum(features_occurings_for_label[label].values())
     return result
 
@@ -96,7 +98,7 @@ def count_features_prob_for_label(labels, list_of_reviews):
 def convert_reviews_to_features_lists(list_of_reviews):  # CONVERTS LIST OF REVIEWS TO LIST OF LISTS WITH REVIEWS
     # FEATURES
     result = []
-    vectorizer = CountVectorizer()
+    vectorizer = CountVectorizer(stop_words='english')
     for rev in list_of_reviews:
         vectorizer.fit_transform([rev])
         result.append(vectorizer.get_feature_names())
@@ -130,7 +132,7 @@ def count_number_of_features_in_reviews(list_of_reviews):  # GIVES NUMBER OF FEA
 
 
 def extract_features_from_text(document):
-    vectorizer = CountVectorizer()
+    vectorizer = CountVectorizer(stop_words='english')
     matrix = vectorizer.fit_transform(document)
     return vectorizer, matrix
 
@@ -154,39 +156,47 @@ def get_features_occurings_dict(features):  # GET DICTIONARY WITH FEATURE AND HO
 
 def get_data_dict():
     return {'label3': read_label3_to_list(),
-                    'label4': read_label4_to_list(),
-                    'rating': read_ratings_to_list(),
-                    'review': read_reviews_to_list()}
+            'label4': read_label4_to_list(),
+            'rating': read_ratings_to_list(),
+            'review': read_reviews_to_list()}
 
 
 if __name__ == '__main__':
     revs = read_reviews_to_list()
     ex_features = extract_features_from_text(revs)
     print("\nFEATURES\n")
-    print(get_features_names(ex_features))
-    print("\nMATRIX OF FEATURES\n")
-    print(ex_features[1].toarray())
-    print("\nFEATURES OCCURINGS IN ALL REVIEWS\n")
-    print(get_features_occurings_dict(ex_features))
-    print("\nNUMBER OF FEATURES FOR EACH REVIEW\n")
-    print(count_number_of_features_in_reviews(revs))
-    print("\nNUMBER OF WORDS FOR EACH REVIEW\n")
-    print(count_number_of_words_in_reviews(revs))
+    print(len(get_features_names(ex_features)))
+    # print("\nMATRIX OF FEATURES\n")
+    # print(ex_features[1].toarray())
+    # print("\nFEATURES OCCURINGS IN ALL REVIEWS\n")
+    # print(get_features_occurings_dict(ex_features))
 
-    labs = read_label3_to_list()
-    print("\nNUMBER OF REVIEWS IN LABEL\n")
-    print(count_reviews_for_label(labs))
-    print("\nPROB FOR LABEL OCC\n")
-    print(count_prob_of_label(labs))
-    print('\nFEATURES OCC IN LABELS\n')
-    features_occurings_for_label_m = count_features_occurings_for_label(labs, revs)
+    # print("\nNUMBER OF FEATURES FOR EACH REVIEW\n")
+    # r = count_number_of_features_in_reviews(revs)
+    # print(count_number_of_features_in_reviews(revs))
+    # print("\nNUMBER OF WORDS FOR EACH REVIEW\n")
+    # r = count_number_of_words_in_reviews(revs)
+    # print(r)
+    # print(sum(r)/len(r))
+    # plt.plot(r)
+    # plt.show()
+
+    #labs = read_label3_to_list()
+    #print("\nNUMBER OF REVIEWS IN LABEL\n")
+    #print(count_reviews_for_label(labs))
+    #print("\nPROB FOR LABEL OCC\n")
+    #print(count_prob_of_label(labs))
+    #print('\nFEATURES OCC IN LABELS\n')
+    #features_occurings_for_label_m = count_features_occurings_for_label(labs, revs)
     #for el in features_occurings_for_label_m:
-     #  print(el + '\n')
-     #   print(features_occurings_for_label_m[el])
+
+    #    #print(el + '\n')
+    #    print(features_occurings_for_label_m['1'])
+    #r_d = sorted(features_occurings_for_label_m['2'].items(), key=lambda x: x[1], reverse=True)
+    #print(r_d)
+
     #print('\nFEATURES PROBS IN LABELS\n')
     #features_prob_for_label_m = count_features_prob_for_label(labs, revs)
     #for el in features_prob_for_label_m:
-        #print(el + '\n')
-        #print(features_prob_for_label_m[el])
-
-
+    #    print(el + '\n')
+    #    print(features_prob_for_label_m[el])
